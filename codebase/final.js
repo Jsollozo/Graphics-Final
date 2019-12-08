@@ -23,20 +23,18 @@ var u_normalMatrix;
 //var u_specular;
 
 var projection = mat4.create();
-var modelview = mat4.create(); //this or rotator??
+var modelview;
+//var modelview = mat4.create(); //this or rotator??
 var normalMatrix = mat3.create();
-var rotator;
-
+var rotator; //trackball rotator implemented as a mouse
 var lastTime = 0;
-var colors = [ [1,1,1] //RGB color arrays for diffuse and specular color vals
-
-var lightPositions = [ [0,0,0,1] //vals for light pos
-];
+var colors = [ [1,1,1] ] //RGB color arrays for diffuse & specular color vals
+var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
 //objs for display
-var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder();, uvCone()];
+var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
 var currentModelNumber; //contains data for current obj
 
 function degToRad(degrees){
@@ -44,14 +42,14 @@ function degToRad(degrees){
 }
 
 function draw() {
-  gl.clearColor(0.15, 0.15, 0, 3, 1);
+  gl.clearColor(0.15, 0.15, 0.3, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   mat4.perspective(projection, Math.PI/5,1,10,20);
-  
+  modelview = rotator.getViewMatrix();
   
   installModel(objects[0]);
   currentModelNumber = 0;
-  update_uniform(modelview,projection 0);
+  update_uniform(modelview,projection, 0);
 }
 
 function update_uniform(modelview, projection, currentModelNumber){
@@ -60,7 +58,7 @@ function update_uniform(modelview, projection, currentModelNumber){
   mat3.normalFromMat4(normalMatrix, modelview);
   gl.uniformMatrix3fv(u_normalMatrix, false, normalMatrix);
   gl.uniformMatrix4fv(u_modelview, false, modelview);
-  gl.uniformMatrix4fv(u_projection, false, projection);]
+  gl.uniformMatrix4fv(u_projection, false, projection);
   gl.drawElements(gl.TRIANGLES, objects[currentModelNumber].indices.length, gl.UNSIGNED_SHORT, 0);
 }
 
@@ -166,7 +164,7 @@ function init(){
   }
   catch (e) {
     document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context. </p>";
-    return'
+    return;
   }
   try {
     initGL(); //init the webglgraphics
@@ -180,6 +178,4 @@ function init(){
   document.getElementbyId("my_gl").onchange = draw;
   rotator = new TrackBallRotator(canvas, draw, 15);
   draw();
-
-
 }
