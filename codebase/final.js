@@ -48,8 +48,8 @@ function draw() {
   mat4.perspective(projection, Math.PI/5,1,10,20);
   modelview = rotator.getViewMatrix();
   
-  //installModel(objects[0]);
-  installModel(cube());
+  installModel(objects[0]);
+  //installModel(cube());
   currentModelNumber = 0;
   update_uniform(modelview,projection, 0);
 }
