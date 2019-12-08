@@ -35,6 +35,7 @@ var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 
 //objs for display
 var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
+//var objects = [models.cube()];
 var currentModelNumber; //contains data for current obj
 
 function degToRad(degrees){
@@ -47,7 +48,8 @@ function draw() {
   mat4.perspective(projection, Math.PI/5,1,10,20);
   modelview = rotator.getViewMatrix();
   
-  installModel(objects[0]);
+  //installModel(objects[0]);
+  installModel(cube());
   currentModelNumber = 0;
   update_uniform(modelview,projection, 0);
 }
