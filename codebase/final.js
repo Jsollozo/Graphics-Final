@@ -47,8 +47,11 @@ function draw() {
   gl.clearColor(0.15, 0.15, 0, 3, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   mat4.perspective(projection, Math.PI/5,1,10,20);
-  //installModel(objects[0]);
-  //currentModelNumber = 0;
+  
+  
+  installModel(objects[0]);
+  currentModelNumber = 0;
+  update_uniform(modelview,projection 0);
 }
 
 function update_uniform(modelview, projection, currentModelNumber){
