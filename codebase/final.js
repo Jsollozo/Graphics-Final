@@ -34,7 +34,7 @@ var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
 //objs for display
-var objects = [cube(0.1),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
+var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
 //var objects = [models.cube()];
 var currentModelNumber; //contains data for current obj
 
@@ -49,7 +49,6 @@ function draw() {
   modelview = rotator.getViewMatrix();
   
   installModel(objects[0]);
-  //installModel(cube(3));
   currentModelNumber = 0;
   update_uniform(modelview,projection, 0);
 }
@@ -165,14 +164,14 @@ function init(){
     }
   }
   catch (e) {
-    document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context. </p>";
+    //document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context. </p>";
     return;
   }
   try {
     initGL(); //init the webglgraphics
   }
   catch (e) {
-    document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
+    //document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
     return;
   }
   
