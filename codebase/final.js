@@ -51,6 +51,7 @@ function draw() {
   installModel(objects[0]);
   currentModelNumber = 0;
   update_uniform(modelview,projection, 0);
+  modelview = rotator.getViewMatrix
 }
 
 function update_uniform(modelview, projection, currentModelNumber){
