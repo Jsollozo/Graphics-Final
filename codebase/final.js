@@ -57,7 +57,7 @@ function draw() {
   currentModelNumber = 1;
   //translate -> scale -> rotate
   //mat4.scale(modelview, modelview, [5,10,20]);
-  update_uniform(modelview,projection, 0);
+  update_uniform(modelview,projection, 1);
   modelview = rotator.getViewMatrix();
 }
 
