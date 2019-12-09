@@ -36,6 +36,7 @@ var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 
 //objs for display
 var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
+
 //var objects = [models.cube()];
 var currentModelNumber; //contains data for current obj
 
@@ -52,10 +53,12 @@ function draw() {
   
   //World
   
-
-  //installModel(objects[0]);
-  //currentModelNumber = 0;
-  //update_uniform(modelview,projection, 0);
+  installModel(objects[1]);
+  currentModelNumber = 1;
+  //translate -> scale -> rotate
+  //mat4.scale(modelview, modelview, [5,10,20]);
+  update_uniform(modelview,projection, 0);
+  modelview = rotator.getViewMatrix();
 }
 
 function update_uniform(modelview, projection, currentModelNumber){
