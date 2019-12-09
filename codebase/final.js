@@ -22,13 +22,14 @@ var u_normalMatrix;
 //var u_diffuse;
 //var u_specular;
 
-var projection = mat4.create();
-var modelview;
+var projection = mat4.create(); //projection matrix
+var modelview; //modelview matrix
 //var modelview = mat4.create(); //this or rotator??
 var normalMatrix = mat3.create();
 var rotator; //trackball rotator implemented as a mouse
+
 var lastTime = 0;
-var colors = [ [1,1,1] ] //RGB color arrays for diffuse & specular color vals
+var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
@@ -45,18 +46,23 @@ function degToRad(degrees){
 function draw() {
   gl.clearColor(0.15, 0.15, 0.3, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  mat4.perspective(projection, Math.PI/5,1,10,20);
+  
+  mat4.perspective(projection, Math.PI/5, 1, 10, 20);
   modelview = rotator.getViewMatrix();
   
-  installModel(objects[0]);
-  currentModelNumber = 0;
-  update_uniform(modelview,projection, 0);
+  //World
+  
+
+  //installModel(objects[0]);
+  //currentModelNumber = 0;
+  //update_uniform(modelview,projection, 0);
 }
 
 function update_uniform(modelview, projection, currentModelNumber){
   //Get matrix for transforming normal vectors 
   //and send matrices to shader program
   mat3.normalFromMat4(normalMatrix, modelview);
+  
   gl.uniformMatrix3fv(u_normalMatrix, false, normalMatrix);
   gl.uniformMatrix4fv(u_modelview, false, modelview);
   gl.uniformMatrix4fv(u_projection, false, projection);
@@ -65,7 +71,7 @@ function update_uniform(modelview, projection, currentModelNumber){
 
 //called and data for the model are copied into the approproate buffers,
 //and the scene is drawn
-function instalModel(modelData){
+function installModel(modelData){
   gl.bindBuffer(gl.ARRAY_BUFFER, a_coords_buffer);
   gl.bufferData(gl.ARRAY_BUFFER, modelData.vertexPositions, gl.STATIC_DRAW);
   gl.vertexAttribPointer(a_coords_loc, 3, gl.FLOAT, false, 0, 0);
@@ -102,7 +108,7 @@ function initGL(){
   gl.uniform3f(u_specularColor, 0.5, 0.5, 0.5);
   gl.uniform4f(u_diffuseColor, 1, 1, 1, 1);
   gl.uniform1f(u_specularExponent, 10);
-  gl.uniform4f(u_lightPositions, 0, 0, 0, 1);
+  gl.uniform4f(u_lightPosition, 0, 0, 0, 1);
 }
 
 
@@ -112,7 +118,7 @@ function createProgram(gl, vertexShaderID, fragmentShaderID){
   
   function getTextContent(elementID){
     //nested function. Used to get shader in html
-    var element = document.getElementbyId(elementID);
+    var element = document.getElementById(elementID);
     var node = element.firstChild;
     var str = "";
     while (node) {
@@ -148,7 +154,7 @@ function createProgram(gl, vertexShaderID, fragmentShaderID){
   gl.attachShader(prog, vsh);
   gl.attachShader(prog, fsh);
   gl.linkProgram(prog);
-  if( !gl.getProgram(prog, gl.LINK_STATUS)){
+  if( !gl.getProgramParameter(prog, gl.LINK_STATUS)){
     throw "Link error in program: " + gl.getProgramInfoLog(prog);
   }
   return prog;
@@ -157,26 +163,24 @@ function createProgram(gl, vertexShaderID, fragmentShaderID){
 //init called when page is loaded
 function init(){
   try{
-    var canvas = document.getElementbyId("myGLCanvas");
+    var canvas = document.getElementById("myGLCanvas");
     gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     if(! gl) {
       throw "Browser does not supprot webgl";
     }
   }
   catch (e) {
-    //document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context. </p>";
+    document.getElementById("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context.</p>";
     return;
   }
   try {
     initGL(); //init the webglgraphics
   }
   catch (e) {
-    //document.getElementbyId("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
+    document.getElementById("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
     return;
   }
   
-  document.getElementbyId("my_gl").checked = false;
-  document.getElementbyId("my_gl").onchange = draw;
-  rotator = new TrackBallRotator(canvas, draw, 15);
+  rotator = new TrackballRotator(canvas, draw, 15);
   draw();
 }
