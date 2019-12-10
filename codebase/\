@@ -82,18 +82,8 @@ function world(){
   modelview = rotator.getViewMatrix();
 
   tree();
-  car();
 }
 
-function car(){
-  installModel(objects[0]);
-  currentModelNumber = 0;
-
-  mat4.translate(modelview, modelview, [1, 1, 1]);
-
-  update_uniform(modelview, projection, 0);
-
-}
 function tree(){
   //4cylinder //5 conei
   //Trunk
@@ -111,15 +101,14 @@ function tree(){
   installModel(objects[5]);
   currentModelNumber = 5;
   
-  mat4.translate(modelview, modelview, [0, 1.2, 0.3]);
+  mat4.translate(modelview, modelview, [0, 1.0, 0.3]);
   mat4.rotate(modelview, modelview, 5.14, [1, 0, 0]);
-  //mat4.scale(modelview, modelview, [1, 1, 1.3]);
+  //mat4.scale(modelview, modelview, [3, 3, 3]);
 
   update_uniform(modelview, projection, 5);
 
   update_uniform(modelview, projection,5);
   modelview = rotator.getViewMatrix();
-
 }
 
 

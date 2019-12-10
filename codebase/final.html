@@ -13,6 +13,9 @@
   uniform mat4 modelview;
   uniform mat4 projection;
 
+  //varying vec3 v_normal;
+  //varying vec3 v_eyeCoords;
+
   uniform mat3 normalMatrix;
   uniform vec4 lightPosition;
   uniform vec4 diffuseColor;
@@ -21,6 +24,27 @@
   varying vec4 v_color; 
   
   void main(){
+//    vec4 coords = vec4(a_coords, 1.0);
+//    vec4 eyeCoords = modelview * coords;
+//    gl_Position = projection * eyeCoords;
+
+    //v_normal = normalize(a_normal)
+    //v_eyeCoords = eyeCoords.xyz/eyeCoords.w;
+
+
+//    vec3 N, L;
+//    vec4 coords = vec4(a_coords, 1.0);
+//    vec4 eyeCoords = modelview * coords;
+//    N = normalize(normalMatrix*a_normal);
+//    if(lightPosition.w == 0.0){
+//      L = normalize(lightPosition.xyz);
+//    }
+//    else{
+//      L = normalize( lightPosition.xyz/lightPosition.w - eyeCoords.xyz );
+//    }
+//    float lambertian = dot(L,N);
+//    v_color = vec4( 1.0 * lambertian * diffuseColor.rgb);
+
     vec4 coords = vec4(a_coords,1.0);
     vec4 eyeCoords = modelview* coords;
     gl_Position = projection * eyeCoords;
@@ -31,7 +55,7 @@
       L = normalize( lightPosition.xyz );
     }
     else {
-      L = normalize( lightPosition.xyz/lightPosition.w - eyeCoords.xyz );
+    L = normalize( lightPosition.xyz/lightPosition.w - eyeCoords.xyz );
     }
     R = -reflect(L,N);
     V = normalize( -eyeCoords.xyz);     // (Assumes a perspective projection.)
@@ -57,8 +81,9 @@
     //#else
     // precision mediump float;
     //#endif
-
+    
     void main(){
+    // gl_FragColor = vec4(diffuseColor.a);
       gl_FragColor = v_color;
     }
 </script>
