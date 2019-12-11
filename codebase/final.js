@@ -330,7 +330,7 @@ function car(){
   installModel(objects[2]);
   currentModelNumber = 2;
 
-  mat4.translate(modelview, modelview, [2.14, 0, 2.0]);
+  mat4.translate(modelview, modelview, [2.14, 0, 1.9]);
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
@@ -341,7 +341,7 @@ function car(){
   installModel(objects[2]);
   currentModelNumber = 2;
 
-  mat4.translate(modelview, modelview, [1.56, 0, 2.0]);
+  mat4.translate(modelview, modelview, [1.56, 0, 1.9]);
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
