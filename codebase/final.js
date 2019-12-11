@@ -32,6 +32,11 @@ var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 
+//For Animation
+var then = 0;
+var rotateAngle = 0;
+var tireAngle = 0;
+
 
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
@@ -55,6 +60,26 @@ function draw() {
   
   world();
   //road();
+}
+
+function animate() {
+    if (then==0)
+    {
+      then = Date.now();
+    }
+    else
+    {
+    now=Date.now();
+    // Convert to seconds
+    now *= 0.001;
+    // Subtract the previous time from the current time
+    var deltaTime = now - then;
+    // Remember the current time for the next frame.
+    then = now;  
+    
+    // Animate the Rotation
+//    modelYRotationRadians += 0.01;
+    }
 }
 
 function world(){
@@ -532,4 +557,11 @@ function init(){
   
   rotator = new TrackballRotator(canvas, draw, 15);
   draw();
+
+}
+
+function tick(){
+  requestAnimFrame(tick);
+  draw()
+  animate()
 }
