@@ -81,7 +81,7 @@ function world(){
   update_uniform(modelview, projection, 4);
   modelview = rotator.getViewMatrix();
 
-  //tree();
+  tree();
   car();
   streetLight();
 }
@@ -92,7 +92,7 @@ function car(){
   installModel(objects[0]);
   currentModelNumber = 0;
 
-  mat4.translate(modelview, modelview, [1.85, .90, .85]);
+  mat4.translate(modelview, modelview, [1.85, .80, .85]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.80, .90, 0.15]);
 
@@ -103,7 +103,7 @@ function car(){
   installModel(objects[0]);
   currentModelNumber = 0;
 
-  mat4.translate(modelview, modelview, [1.85,.60,.90]);
+  mat4.translate(modelview, modelview, [1.85,.40, 1.1]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.90, 1.75, .35]);
 
@@ -114,7 +114,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.85, .19, 1.5]);
+  mat4.translate(modelview, modelview, [1.85, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.10, .10, 1.4]);
@@ -127,7 +127,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.85, .76, .25]);
+  mat4.translate(modelview, modelview, [1.85, .55, .25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.10, .10, 1.4]);
@@ -140,7 +140,7 @@ function car(){
   installModel(objects[3]);
   currentModelNumber = 3;
 
-  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.translate(modelview, modelview, [2.45, 0.55, .25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.65, .65, .65]);
@@ -153,7 +153,7 @@ function car(){
   installModel(objects[3]);
   currentModelNumber = 3;
 
-  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.translate(modelview, modelview, [1.25, .55, .25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.65, .65, .65]);
@@ -166,7 +166,7 @@ function car(){
   installModel(objects[3]);
   currentModelNumber = 3;
 
-  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.translate(modelview, modelview, [1.25, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.65, .65, .65]);
@@ -179,7 +179,7 @@ function car(){
   installModel(objects[3]);
   currentModelNumber = 3;
 
-  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.translate(modelview, modelview, [2.45, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
   mat4.scale(modelview, modelview, [.65, .65, .65]);
@@ -193,7 +193,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.translate(modelview, modelview, [2.45, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -205,7 +205,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.translate(modelview, modelview, [2.45, 0, 1.5]);
   mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -217,7 +217,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.translate(modelview, modelview, [2.45, 0, 1.5]);
   mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -228,7 +228,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.translate(modelview, modelview, [1.25, 0, 1.5]);
   mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -239,7 +239,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.translate(modelview, modelview, [1.25, 0, 1.5]);
   mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -250,7 +250,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.translate(modelview, modelview, [1.25, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -261,7 +261,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.translate(modelview, modelview, [2.45, 0.56, 0.25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -272,7 +272,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.translate(modelview, modelview, [2.45, .56, .25]);
   mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -283,7 +283,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.translate(modelview, modelview, [2.45, .56, .25]);
   mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -294,7 +294,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.translate(modelview, modelview, [1.25, .56, .25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -305,7 +305,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.translate(modelview, modelview, [1.25, .56, .25]);
   mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -316,7 +316,7 @@ function car(){
   installModel(objects[4]);
   currentModelNumber = 4;
 
-  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.translate(modelview, modelview, [1.25, .56, .25]);
   mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
@@ -330,7 +330,7 @@ function car(){
   installModel(objects[2]);
   currentModelNumber = 2;
 
-  mat4.translate(modelview, modelview, [2.14, .24, 1.7]);
+  mat4.translate(modelview, modelview, [2.14, 0, 2.0]);
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
@@ -341,7 +341,7 @@ function car(){
   installModel(objects[2]);
   currentModelNumber = 2;
 
-  mat4.translate(modelview, modelview, [1.56, .24, 1.7]);
+  mat4.translate(modelview, modelview, [1.56, 0, 2.0]);
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
@@ -355,7 +355,7 @@ function tree(){
   installModel(objects[4]);
   currentModelNumber = 4;
   
-  mat4.translate(modelview, modelview, [0, 0.6, 0]);
+  mat4.translate(modelview, modelview, [0.6, 0.6, 0]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [0.3, 0.3, 0.4]);
   
@@ -366,7 +366,7 @@ function tree(){
   installModel(objects[5]);
   currentModelNumber = 5;
   
-  mat4.translate(modelview, modelview, [0, 1.2, 0.3]);
+  mat4.translate(modelview, modelview, [0.6, 1.2, 0.3]);
   mat4.rotate(modelview, modelview, 5.14, [1, 0, 0]);
   //mat4.scale(modelview, modelview, [1, 1, 1.3]);
 
