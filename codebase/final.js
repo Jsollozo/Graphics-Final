@@ -37,7 +37,7 @@ var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
 //objs for display
-var objects = [cube(),ring(), uvSphere(), uvTorus(), uvCylinder(), uvCone()];
+var objects = [cube(),ring(), uvSphere(), uvTorus(.5,.5/2.5,32,16), uvCylinder(), uvCone()];
 var currentModelNumber; //contains data for current obj
 
 
@@ -81,19 +81,274 @@ function world(){
   update_uniform(modelview, projection, 4);
   modelview = rotator.getViewMatrix();
 
-  tree();
+  //tree();
   car();
+  streetLight();
 }
 
 function car(){
+
+  //cockpit
   installModel(objects[0]);
   currentModelNumber = 0;
 
-  mat4.translate(modelview, modelview, [1, 1, 1]);
+  mat4.translate(modelview, modelview, [1.85, .90, .85]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.80, .90, 0.15]);
 
   update_uniform(modelview, projection, 0);
+  modelview = rotator.getViewMatrix();
+
+  //body
+  installModel(objects[0]);
+  currentModelNumber = 0;
+
+  mat4.translate(modelview, modelview, [1.85,.60,.90]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.90, 1.75, .35]);
+
+  update_uniform(modelview, projection, 0);
+  modelview =  rotator.getViewMatrix();
+
+  //Front Axel
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.85, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.10, .10, 1.4]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Back Axel
+
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.85, .76, .25]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.10, .10, 1.4]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Back Tire 1
+
+  installModel(objects[3]);
+  currentModelNumber = 3;
+
+  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.65, .65, .65]);
+
+  update_uniform(modelview, projection, 2);
+  modelview = rotator.getViewMatrix();
+
+  //Back Tire 2
+
+  installModel(objects[3]);
+  currentModelNumber = 3;
+
+  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.65, .65, .65]);
+
+  update_uniform(modelview, projection, 2);
+  modelview = rotator.getViewMatrix();
+
+  //Front Tire 1
+
+  installModel(objects[3]);
+  currentModelNumber = 3;
+
+  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.65, .65, .65]);
+
+  update_uniform(modelview, projection, 2);
+  modelview = rotator.getViewMatrix();
+
+  //Front Tire 2
+
+  installModel(objects[3]);
+  currentModelNumber = 3;
+
+  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.rotate(modelview, modelview, 1.565, [0, 1, 0]);
+  mat4.scale(modelview, modelview, [.65, .65, .65]);
+
+  update_uniform(modelview, projection, 2);
+  modelview = rotator.getViewMatrix();
+
+
+  //Spoke(Front Wheel 2) 1
+
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 2(Front Wheel 2)
+
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 3(Front Wheel 2)
+
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 1(Front Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 2(Front Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 3(Front Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .19, 1.5]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 1(Back Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 2(Back Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 3(Back Wheel 1)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [2.45, .76, .25]);
+  mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 1(Back Wheel 2)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 2(Back Wheel 2)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.rotate(modelview, modelview, 1.25, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+  //Spoke 3(Back Wheel 2)
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [1.25, .76, .25]);
+  mat4.rotate(modelview, modelview, 3.57, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.05, .05, .60]);
+
+  update_uniform(modelview, projection,4);
+  modelview = rotator.getViewMatrix();
+
+
+
+  //Head light 1
+
+  installModel(objects[2]);
+  currentModelNumber = 2;
+
+  mat4.translate(modelview, modelview, [2.14, .24, 1.7]);
+  mat4.scale(modelview, modelview, [.14, .14, .14]);
+
+  update_uniform(modelview, projection, 3);
+  modelview = rotator.getViewMatrix();
+
+  //Head light 2
+
+  installModel(objects[2]);
+  currentModelNumber = 2;
+
+  mat4.translate(modelview, modelview, [1.56, .24, 1.7]);
+  mat4.scale(modelview, modelview, [.14, .14, .14]);
+
+  update_uniform(modelview, projection, 3);
+  modelview = rotator.getViewMatrix();
 
 }
+
 function tree(){
   //4cylinder //5 conei
   //Trunk
@@ -120,6 +375,31 @@ function tree(){
   update_uniform(modelview, projection,5);
   modelview = rotator.getViewMatrix();
 
+}
+
+
+function streetLight(){
+
+  //pole
+  installModel(objects[4]);
+  currentModelNumber = 4;
+
+  mat4.translate(modelview, modelview, [0, .80, .25]); 
+  mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
+  mat4.scale(modelview, modelview, [.15, .15, 1.25]);
+
+  update_uniform(modelview, projection, 4);
+  modelview = rotator.getViewMatrix();
+
+  //light
+  installModel(objects[2]);
+  currentModelNumber = 2;
+
+  mat4.translate(modelview, modelview, [0, 1.40, .53]);
+  mat4.scale(modelview, modelview, [.25, .25, .25]);
+
+  update_uniform(modelview, projection, 3);
+  modelview = rotator.getViewMatrix();
 }
 
 
