@@ -34,6 +34,11 @@ var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 var lightPositions = [ [0,0,0,1] ]; //vals for light pos
 var daytime = true;
 //var animate = false;
+
+//for animation
+var animationAngle = degToRad(15);
+var then = 0; 
+
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
 //objs for display
