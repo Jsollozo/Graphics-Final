@@ -83,6 +83,7 @@ function world(){
 
   tree();
   car();
+  sun();
   streetLight();
 }
 
@@ -353,6 +354,16 @@ function car(){
 
 }
 
+function sun(){
+  installModel(objects[2]);
+  currentModelNumber = 2;
+  
+  mat4.translate(modelview, modelview, [1, 3, 1, 1]);
+  update_uniform(modelview, projection, 2);
+  modelview = rotator.getViewMatrix();
+
+}
+
 function tree(){
   //4cylinder //5 conei
   //Trunk
@@ -382,7 +393,6 @@ function tree(){
   modelview = rotator.getViewMatrix();
 
 }
-
 
 function streetLight(){
 
