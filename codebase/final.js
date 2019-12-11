@@ -32,8 +32,8 @@ var rotator; //trackball rotator implemented as a mouse
 var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 var lightPositions = [ [0,0,0,1] ]; //vals for light pos
-
-
+var daytime = true;
+//var animate = false;
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
 //objs for display
@@ -378,8 +378,14 @@ function car(){
 function sun(){
   installModel(objects[2]);
   currentModelNumber = 2;
-  
   mat4.translate(modelview, modelview, [1, 3, 1, 1]);
+  if(daytime){
+    gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
+  }
+  else{
+    gl.uniform4f(u_diffuseColor, 0.1, 0.1, 0.1, 1);
+  }
+
   update_uniform(modelview, projection, 2);
   modelview = rotator.getViewMatrix();
 
@@ -488,6 +494,8 @@ function initGL(){
   index_buffer = gl.createBuffer();
   gl.enable(gl.DEPTH_TEST);
 
+  
+  
   gl.uniform3f(u_specularColor, 0.5, 0.5, 0.5);
   gl.uniform4f(u_diffuseColor, 1, 1, 1, 1);
   gl.uniform1f(u_specularExponent, 10);
@@ -563,7 +571,7 @@ function init(){
     document.getElementById("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
     return;
   }
-  
+  //document.getElementById("animate").checked = false;
   rotator = new TrackballRotator(canvas, draw, 15);
   draw();
 
