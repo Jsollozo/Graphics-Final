@@ -18,9 +18,10 @@ var u_lightPosition;
 var u_modelview;
 var u_projection;
 var u_normalMatrix;
-//var u_ambient;
-//var u_diffuse;
-//var u_specular;
+
+var u_ambient;
+var u_diffuse;
+var u_specular;
 
 var projection = mat4.create(); //projection matrix
 var modelview; //modelview matrix
@@ -31,12 +32,6 @@ var rotator; //trackball rotator implemented as a mouse
 var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 var lightPositions = [ [0,0,0,1] ]; //vals for light pos
-
-//For Animation
-var then = 0;
-var rotateAngle = 0;
-var tireAngle = 0;
-
 
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
@@ -59,7 +54,6 @@ function draw() {
   modelview = rotator.getViewMatrix();
   
   world();
-  //road();
 }
 
 function animate() {
@@ -87,7 +81,8 @@ function world(){
   //Road
   installModel(objects[1]);
   currentModelNumber = 1;
- 
+  //gl.uniform4f(u_diffuseColor, 2, 0, 2, 1);
+
   mat4.translate(modelview, modelview, [0, 0.3, 0]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [5.5,5.5,5.5]);
@@ -98,6 +93,7 @@ function world(){
   //Grass
   installModel(objects[4]);
   currentModelNumber = 4;
+  gl.uniform4f(u_diffuseColor, 0, 1, 0, 1);
 
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
   mat4.scale(modelview, modelview, [7, 7, 0.5]);
@@ -116,6 +112,7 @@ function car(){
   //cockpit
   installModel(objects[0]);
   currentModelNumber = 0;
+  gl.uniform4f(u_diffuseColor, 1, 0, 0, 1);
 
   mat4.translate(modelview, modelview, [1.85, .80, .85]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -138,6 +135,7 @@ function car(){
   //Front Axel
   installModel(objects[4]);
   currentModelNumber = 4;
+  gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0.5, 1);
 
   mat4.translate(modelview, modelview, [1.85, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -164,6 +162,7 @@ function car(){
 
   installModel(objects[3]);
   currentModelNumber = 3;
+  gl.uniform4f(u_diffuseColor, 0.2, 0.2, 0.2, 1);
 
   mat4.translate(modelview, modelview, [2.45, 0.55, .25]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -217,6 +216,7 @@ function car(){
 
   installModel(objects[4]);
   currentModelNumber = 4;
+  gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
 
   mat4.translate(modelview, modelview, [2.45, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -379,6 +379,7 @@ function tree(){
   //Trunk
   installModel(objects[4]);
   currentModelNumber = 4;
+  gl.uniform4f(u_diffuseColor, .96, .40, 0, 1);
   
   mat4.translate(modelview, modelview, [0.6, 0.6, 0]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -390,7 +391,8 @@ function tree(){
   //Leaves
   installModel(objects[5]);
   currentModelNumber = 5;
-  
+  gl.uniform4f(u_diffuseColor, 0, 1, 0, 1);
+
   mat4.translate(modelview, modelview, [0.6, 1.2, 0.3]);
   mat4.rotate(modelview, modelview, 5.14, [1, 0, 0]);
   //mat4.scale(modelview, modelview, [1, 1, 1.3]);
@@ -408,6 +410,7 @@ function streetLight(){
   //pole
   installModel(objects[4]);
   currentModelNumber = 4;
+  gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0.5, 1);
 
   mat4.translate(modelview, modelview, [0, .80, .25]); 
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -470,14 +473,10 @@ function initGL(){
   u_specularColor = gl.getUniformLocation(prog, "specularColor");
   u_specularExponent = gl.getUniformLocation(prog, "speculatExponent");
 
-  //u_diffuse = gl.getUniformLocation(prog, "diffuse");
-
   a_coords_buffer = gl.createBuffer();
   a_normal_buffer = gl.createBuffer();
   index_buffer = gl.createBuffer();
   gl.enable(gl.DEPTH_TEST);
-
-  //gl.uniform1i(u_diffuse, 0);
 
   gl.uniform3f(u_specularColor, 0.5, 0.5, 0.5);
   gl.uniform4f(u_diffuseColor, 1, 1, 1, 1);
