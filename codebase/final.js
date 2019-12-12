@@ -100,9 +100,11 @@ function animate() {
 function world(){
   mvPushMatrix();
   sun();
+  mvPopMatrix();
 
-
+  mvPushMatrix();
   streetLight();
+  mvPopMatrix();
 
   /*World Plane*/
   //Road
