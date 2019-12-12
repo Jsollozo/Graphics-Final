@@ -36,8 +36,13 @@ var daytime = true;
 //var animate = false;
 
 //for animation
+var animateMe = false
 var animationAngle = degToRad(15);
-var then = 0; 
+var then = 0;
+var now = 0;
+var sunAngle = Math.PI/2;
+var day = true;
+var frame = 0;
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
@@ -74,7 +79,16 @@ function animate() {
     // Subtract the previous time from the current time
     var deltaTime = now - then;
     // Remember the current time for the next frame.
-    then = now;  
+    then = now;
+
+    sunAngle += Math.Pi/360;
+    if(sunAngle > 2* Math.PI){
+      sunAngle = 2* Math.PI;
+    }  
+
+    day = sunAngle < Math.PI;
+
+    frame += 1;
     
     // Animate the Rotation
 //    modelYRotationRadians += 0.01;
@@ -585,5 +599,8 @@ function init(){
 function tick(){
   requestAnimFrame(tick);
   draw()
-  animate()
+  if(document.getElementById("Animate").checked){
+    animate();
+    animateMe = true;
+  }
 }
