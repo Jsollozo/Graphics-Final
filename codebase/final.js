@@ -31,8 +31,8 @@ var rotator; //trackball rotator implemented as a mouse
 
 var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
-var lightPositions = [ [0,0,0,1] ]; //vals for light pos
-var daytime = true;
+//[0] sunlight [1] street light
+var lightPositions = [ [0,0,0,1]]; //vals for light pos
 //var animate = false;
 
 //for animation
@@ -383,12 +383,15 @@ function car(){
 function sun(){
   installModel(objects[2]);
   currentModelNumber = 2;
+  var sunlight = [ modelview[12], modelview[13], modelview[14] ];
   mat4.translate(modelview, modelview, [1, 3, 1, 1]);
   if(daytime){
     gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
+    gl.uniform4f(u_lightPosition, sunlight[0], sunlight[1], sunlight[2]+2, 1);
   }
   else{
-    gl.uniform4f(u_diffuseColor, 0.1, 0.1, 0.1, 1);
+    //gl.uniform4fv(u_lightPosition, [0, 10, 0, 0]);
+    gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
   }
 
   update_uniform(modelview, projection, 2);
@@ -426,6 +429,8 @@ function tree(){
 
 }
 
+
+
 function streetLight(){
 
   //pole
@@ -443,13 +448,25 @@ function streetLight(){
   //light
   installModel(objects[2]);
   currentModelNumber = 2;
-
+  if(!daytime){
+    //set light pos for night time
+    //gl.uniform4fv(u_lightPosition, lightPositions[1]);
+    gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
+  }
+  else{
+    gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0, 1);
+  }
   mat4.translate(modelview, modelview, [0, 1.40, .53]);
   mat4.scale(modelview, modelview, [.25, .25, .25]);
 
   update_uniform(modelview, projection, 3);
   modelview = rotator.getViewMatrix();
 }
+
+
+function setLightPos(){
+}
+
 
 
 function update_uniform(modelview, projection, currentModelNumber){
@@ -504,7 +521,8 @@ function initGL(){
   gl.uniform3f(u_specularColor, 0.5, 0.5, 0.5);
   gl.uniform4f(u_diffuseColor, 1, 1, 1, 1);
   gl.uniform1f(u_specularExponent, 10);
-  gl.uniform4f(u_lightPosition, 0, 0, 0, 1);
+  //gl.uniform4f(u_lightPosition, lightPositions[1][0], lightPositions[1][1],lightPositions[0][2], lightPositions[1][3]);
+  //gl.uniform4f(u_lightPosition, 0, 0, 0, 1);
 }
 
 
