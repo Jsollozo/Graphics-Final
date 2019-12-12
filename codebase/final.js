@@ -98,6 +98,7 @@ function animate() {
 }
 
 function world(){
+  sun();
   /*World Plane*/
   //Road
   mvPushMatrix();
@@ -134,13 +135,7 @@ function world(){
   mvPushMatrix();
   mat4.rotate(modelview,modelview,(-frame)/180*Math.PI,[0,1,0]);
   car();
-  mvPopMatrix();
 
-  mvPushMatrix();
-  sun();
-  mvPopMatrix();
-
-  mvPushMatrix();
   streetLight();
   mvPopMatrix();
 
@@ -416,17 +411,18 @@ function car(){
 function sun(){
   installModel(objects[2]);
   currentModelNumber = 2;
-  var sunlight = [ modelview[12], modelview[13], modelview[14] ];
   mat4.translate(modelview, modelview, [1, 3, 1, 1]);
-  if(daytime){
-    gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
+  
+  var sunlight = [ modelview[12], modelview[13], modelview[14] ];
+  lightPositions[0] = sunlight;
+  if(day){
+    gl.uniform4f(u_diffuseColor, 1 ,1, 0, 1);
     gl.uniform4f(u_lightPosition, sunlight[0], sunlight[1], sunlight[2]+2, 1);
   }
   else{
     //gl.uniform4fv(u_lightPosition, [0, 10, 0, 0]);
     gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
   }
-
   update_uniform(modelview, projection, 2);
   modelview = rotator.getViewMatrix();
 
@@ -481,7 +477,7 @@ function streetLight(){
   //light
   installModel(objects[2]);
   currentModelNumber = 2;
-  if(!daytime){
+  if(!day){
     //set light pos for night time
     //gl.uniform4fv(u_lightPosition, lightPositions[1]);
     gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
@@ -555,7 +551,7 @@ function initGL(){
   gl.uniform4f(u_diffuseColor, 1, 1, 1, 1);
   gl.uniform1f(u_specularExponent, 10);
   //gl.uniform4f(u_lightPosition, lightPositions[1][0], lightPositions[1][1],lightPositions[0][2], lightPositions[1][3]);
-  //gl.uniform4f(u_lightPosition, 0, 0, 0, 1);
+  //gl.uniform4f(u_lightPosition, lightPositions[0][0], lightPositions[0][1], lightPositions[0][2], lightPositions[0][3]);
 }
 
 function mvPushMatrix() {
