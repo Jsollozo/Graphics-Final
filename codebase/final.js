@@ -131,7 +131,6 @@ function world(){
 
   //currentColor = [0.8, 0.8, 1, 1];
   update_uniform(modelview, projection, 4);
-  modelview = rotator.getViewMatrix();
   mvPopMatrix();
 
   mvPushMatrix();
@@ -242,7 +241,7 @@ function car(){
   mat4.scale(modelview, modelview, [.65, .65, .65]);
 
   update_uniform(modelview, projection, 2);
-  modelview = rotator.getViewMatrix();
+
   mvPopMatrix();
 
   //Front Tire 2
@@ -282,7 +281,7 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+
   mvPopMatrix();
 
   //Spoke 3(Front Wheel 2)
@@ -342,7 +341,7 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+
   mvPopMatrix();
 
   //Spoke 2(Back Wheel 1)
@@ -448,13 +447,14 @@ function sun(){
     gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
   }
   update_uniform(modelview, projection, 2);
-  modelview = rotator.getViewMatrix();
+
 
 }
 
 function tree(){
   //4cylinder //5 conei
   //Trunk
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
   gl.uniform4f(u_diffuseColor, .96, .40, 0, 1);
@@ -464,9 +464,11 @@ function tree(){
   mat4.scale(modelview, modelview, [0.3, 0.3, 0.4]);
   
   update_uniform(modelview, projection, 4);
-  modelview = rotator.getViewMatrix();
+
+  mvPopMatrix();
 
   //Leaves
+  mvPushMatrix();
   installModel(objects[5]);
   currentModelNumber = 5;
   gl.uniform4f(u_diffuseColor, 0, 1, 0, 1);
@@ -478,7 +480,7 @@ function tree(){
   update_uniform(modelview, projection, 5);
 
   update_uniform(modelview, projection,5);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
 }
 
@@ -487,6 +489,7 @@ function tree(){
 function streetLight(){
 
   //pole
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
   gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0.5, 1);
@@ -496,13 +499,15 @@ function streetLight(){
   mat4.scale(modelview, modelview, [.15, .15, 1.25]);
 
   update_uniform(modelview, projection, 4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //light
+  mvPushMatrix();
   installModel(objects[2]);
   currentModelNumber = 2;
   mat4.translate(modelview, modelview, [0, 1.40, .53]);
   mat4.scale(modelview, modelview, [.25, .25, .25]);
+
   
   var lampLight = [ modelview[12], modelview[13], modelview[14] ];
   
@@ -517,7 +522,8 @@ function streetLight(){
   }
 
   update_uniform(modelview, projection, 3);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
+
 }
 
 
@@ -663,9 +669,10 @@ function init(){
     document.getElementById("canvas-holder").innerHTML = "<p>Sorry, could not get a WebGL graphics context:" + e + "</p>";
     return;
   }
-  //document.getElementById("animate").checked = false;
+  document.getElementById("animate").checked = false;
   rotator = new TrackballRotator(canvas, draw, 15);
-  draw();
+  //draw();
+  tick();
 
 }
 
