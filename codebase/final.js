@@ -98,7 +98,9 @@ function animate() {
 }
 
 function world(){
+  mvPushMatrix();
   sun();
+  mvPopMatrix();
   /*World Plane*/
   //Road
   mvPushMatrix();
@@ -111,7 +113,6 @@ function world(){
   mat4.scale(modelview, modelview, [5.5,5.5,5.5]);
 
   update_uniform(modelview, projection, 1);
-  modelview = rotator.getViewMatrix();
   mvPopMatrix();
 
   //Grass
@@ -135,15 +136,19 @@ function world(){
   mvPushMatrix();
   mat4.rotate(modelview,modelview,(-frame)/180*Math.PI,[0,1,0]);
   car();
+  mvPopMatrix();
 
+  mvPushMatrix();
   streetLight();
   mvPopMatrix();
+
 
 }
 
 function car(){
 
   //cockpit
+  mvPushMatrix();
   installModel(objects[0]);
   currentModelNumber = 0;
   gl.uniform4f(u_diffuseColor, 1, 0, 0, 1);
@@ -153,9 +158,10 @@ function car(){
   mat4.scale(modelview, modelview, [.80, .90, 0.15]);
 
   update_uniform(modelview, projection, 0);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //body
+  mvPushMatrix();
   installModel(objects[0]);
   currentModelNumber = 0;
 
@@ -164,9 +170,10 @@ function car(){
   mat4.scale(modelview, modelview, [.90, 1.75, .35]);
 
   update_uniform(modelview, projection, 0);
-  modelview =  rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Front Axel
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
   gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0.5, 1);
@@ -177,10 +184,10 @@ function car(){
   mat4.scale(modelview, modelview, [.10, .10, 1.4]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Back Axel
-
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -190,10 +197,11 @@ function car(){
   mat4.scale(modelview, modelview, [.10, .10, 1.4]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
+
 
   //Back Tire 1
-
+  mvPushMatrix();
   installModel(objects[3]);
   currentModelNumber = 3;
   gl.uniform4f(u_diffuseColor, 0.2, 0.2, 0.2, 1);
@@ -204,10 +212,11 @@ function car(){
   mat4.scale(modelview, modelview, [.65, .65, .65]);
 
   update_uniform(modelview, projection, 2);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix()
+  
 
   //Back Tire 2
-
+  mvPushMatrix();
   installModel(objects[3]);
   currentModelNumber = 3;
 
@@ -217,10 +226,11 @@ function car(){
   mat4.scale(modelview, modelview, [.65, .65, .65]);
 
   update_uniform(modelview, projection, 2);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
+  
 
   //Front Tire 1
-
+  mvPushMatrix();
   installModel(objects[3]);
   currentModelNumber = 3;
 
@@ -231,9 +241,10 @@ function car(){
 
   update_uniform(modelview, projection, 2);
   modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Front Tire 2
-
+  mvPushMatrix();
   installModel(objects[3]);
   currentModelNumber = 3;
 
@@ -243,11 +254,11 @@ function car(){
   mat4.scale(modelview, modelview, [.65, .65, .65]);
 
   update_uniform(modelview, projection, 2);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
 
   //Spoke(Front Wheel 2) 1
-
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
   gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
@@ -257,10 +268,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 2(Front Wheel 2)
-
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -270,9 +281,10 @@ function car(){
 
   update_uniform(modelview, projection,4);
   modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 3(Front Wheel 2)
-
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -281,9 +293,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 1(Front Wheel 1)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -292,9 +305,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 2(Front Wheel 1)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -303,9 +317,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 3(Front Wheel 1)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -314,9 +329,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 1(Back Wheel 1)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -326,8 +342,10 @@ function car(){
 
   update_uniform(modelview, projection,4);
   modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 2(Back Wheel 1)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -336,9 +354,11 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
+  
 
   //Spoke 3(Back Wheel 1)
+  mvPushMatrix()
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -347,9 +367,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 1(Back Wheel 2)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -358,9 +379,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 2(Back Wheel 2)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -369,9 +391,10 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Spoke 3(Back Wheel 2)
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
 
@@ -380,12 +403,12 @@ function car(){
   mat4.scale(modelview, modelview, [.05, .05, .60]);
 
   update_uniform(modelview, projection,4);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix()
 
 
 
   //Head light 1
-
+  mvPushMatrix();
   installModel(objects[2]);
   currentModelNumber = 2;
 
@@ -393,10 +416,10 @@ function car(){
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Head light 2
-
+  mvPushMatrix();
   installModel(objects[2]);
   currentModelNumber = 2;
 
@@ -404,7 +427,7 @@ function car(){
   mat4.scale(modelview, modelview, [.14, .14, .14]);
 
   update_uniform(modelview, projection, 3);
-  modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
 }
 
@@ -555,7 +578,7 @@ function initGL(){
 }
 
 function mvPushMatrix() {
-    var copy = mat4.clone(mvMatrix);
+    var copy = mat4.clone(modelview);
     mvMatrixStack.push(copy);
 }
 
@@ -563,7 +586,7 @@ function mvPopMatrix() {
     if (mvMatrixStack.length == 0) {
       throw "Invalid popMatrix!";
     }
-    mvMatrix = mvMatrixStack.pop();
+    modelview = mvMatrixStack.pop();
 }
 
 
@@ -644,7 +667,7 @@ function init(){
 function tick(){
   requestAnimFrame(tick);
   draw()
-  if(document.getElementById("Animate").checked){
+  if(document.getElementById("animate").checked){
     animate();
     animateMe = true;
   }
