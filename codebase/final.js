@@ -32,7 +32,7 @@ var rotator; //trackball rotator implemented as a mouse
 var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 //[0] sunlight [1] street light
-var lightPositions = [ [0,0,0,1]]; //vals for light pos
+var lightPositions = [ [0,0,0,1], [0,0,0,1]]; //vals for light pos
 //var animate = false;
 
 //for animation
@@ -100,7 +100,10 @@ function animate() {
 function world(){
   mvPushMatrix();
   sun();
-  mvPopMatrix();
+
+
+  streetLight();
+
   /*World Plane*/
   //Road
   mvPushMatrix();
@@ -138,9 +141,6 @@ function world(){
   car();
   mvPopMatrix();
 
-  mvPushMatrix();
-  streetLight();
-  mvPopMatrix();
 
 
 }
@@ -322,7 +322,6 @@ function car(){
   //Spoke 3(Front Wheel 1)
   mvPushMatrix();
   installModel(objects[4]);
-  currentModelNumber = 4;
 
   mat4.translate(modelview, modelview, [1.25, 0, 1.5]);
   mat4.rotate(modelview, modelview, 2.0, [1, 0, 0]);
@@ -500,16 +499,20 @@ function streetLight(){
   //light
   installModel(objects[2]);
   currentModelNumber = 2;
+  mat4.translate(modelview, modelview, [0, 1.40, .53]);
+  mat4.scale(modelview, modelview, [.25, .25, .25]);
+  
+  var lampLight = [ modelview[12], modelview[13], modelview[14] ];
+  
   if(!day){
     //set light pos for night time
-    //gl.uniform4fv(u_lightPosition, lightPositions[1]);
+    lightPositions[1] = lampLight;
+    gl.uniform4f(u_lightPosition, lightPositions[1][0],lightPositions[1][1],lightPositions[1][2]+2, 1);
     gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
   }
   else{
     gl.uniform4f(u_diffuseColor, 0.5, 0.5, 0, 1);
   }
-  mat4.translate(modelview, modelview, [0, 1.40, .53]);
-  mat4.scale(modelview, modelview, [.25, .25, .25]);
 
   update_uniform(modelview, projection, 3);
   modelview = rotator.getViewMatrix();
