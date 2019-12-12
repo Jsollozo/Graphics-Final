@@ -43,6 +43,8 @@ var now = 0;
 var sunAngle = Math.PI/2;
 var day = true;
 var frame = 0;
+var mvMatrix = mat4.create();
+var mvMatrixStack = [];
 
 //cube(side), ring(innerRadius, innerRadius, slices), uvSphere(radius, slices, stacks), uvTorus(outerRadius, innerRadius, slices, stacks), uvCylinder(radius,height, slices, noTop, noBottom), uvCone(radius, height, slices, noBottom), 
 
@@ -98,6 +100,7 @@ function animate() {
 function world(){
   /*World Plane*/
   //Road
+  mvPushMatrix();
   installModel(objects[1]);
   currentModelNumber = 1;
   //gl.uniform4f(u_diffuseColor, 2, 0, 2, 1);
@@ -108,8 +111,10 @@ function world(){
 
   update_uniform(modelview, projection, 1);
   modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
   //Grass
+  mvPushMatrix();
   installModel(objects[4]);
   currentModelNumber = 4;
   gl.uniform4f(u_diffuseColor, 0, 1, 0, 1);
@@ -120,11 +125,25 @@ function world(){
   //currentColor = [0.8, 0.8, 1, 1];
   update_uniform(modelview, projection, 4);
   modelview = rotator.getViewMatrix();
+  mvPopMatrix();
 
+  mvPushMatrix();
   tree();
+  mvPopMatrix();
+
+  mvPushMatrix();
+  mat4.rotate(modelview,modelview,(-frame)/180*Math.PI,[0,1,0]);
   car();
+  mvPopMatrix();
+
+  mvPushMatrix();
   sun();
+  mvPopMatrix();
+
+  mvPushMatrix();
   streetLight();
+  mvPopMatrix();
+
 }
 
 function car(){
@@ -537,6 +556,18 @@ function initGL(){
   gl.uniform1f(u_specularExponent, 10);
   //gl.uniform4f(u_lightPosition, lightPositions[1][0], lightPositions[1][1],lightPositions[0][2], lightPositions[1][3]);
   //gl.uniform4f(u_lightPosition, 0, 0, 0, 1);
+}
+
+function mvPushMatrix() {
+    var copy = mat4.clone(mvMatrix);
+    mvMatrixStack.push(copy);
+}
+
+function mvPopMatrix() {
+    if (mvMatrixStack.length == 0) {
+      throw "Invalid popMatrix!";
+    }
+    mvMatrix = mvMatrixStack.pop();
 }
 
 
