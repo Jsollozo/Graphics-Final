@@ -32,7 +32,7 @@ var rotator; //trackball rotator implemented as a mouse
 var lastTime = 0;
 var colors = [ [1,1,1] ]; //RGB color arrays for diffuse & specular color vals
 //[0] sunlight [1] street light
-var lightPositions = [ [0,0,0,1], [0,0,0,1]]; //vals for light pos
+var lightPositions = [ ]; //vals for light pos
 //var animate = false;
 
 //for animation
@@ -41,7 +41,7 @@ var animationAngle = degToRad(15);
 var then = 0;
 var now = 0;
 var sunAngle = Math.PI/2;
-var day = false;
+var day = true;
 var frame = 0;
 var mvMatrix = mat4.create();
 var mvMatrixStack = [];
@@ -85,11 +85,24 @@ function animate() {
 
     sunAngle += Math.Pi/360;
     if(sunAngle > 2* Math.PI){
-      sunAngle = 2* Math.PI;
+      sunAngle -= 2* Math.PI;
     }  
-
+    //console.log(sunAngle);
     day = sunAngle < Math.PI;
-
+   // console.log(day);
+   //   if(sunAngle < Math.PI){
+   //     console.log("aye"); 
+   //     if(sunAngle >= 0){
+   //     day = true;
+   //     console.log("Daytime");}}
+   // else{
+   //   day = false;
+    //  console.log("nighttime");
+   // }
+   if((frame % 200) > 100){
+      day = true;}
+    else{
+      day = false;}
     frame += 1;
     
     // Animate the Rotation
@@ -493,12 +506,14 @@ function sun(){
   var sunlight = [ modelview[12], modelview[13], modelview[14] ];
   lightPositions[0] = sunlight;
   if(day){
+    console.log("sun function its daytime");
     gl.uniform4f(u_diffuseColor, 1 ,1, 0, 1);
     gl.uniform4f(u_lightPosition, sunlight[0], sunlight[1], sunlight[2]+2, 1);
   }
   else{
+    console.log("sun function its nighttime");
     //gl.uniform4fv(u_lightPosition, [0, 10, 0, 0]);
-    gl.uniform4f(u_diffuseColor, 0.7 ,0.7, 0, 1);
+    gl.uniform4f(u_diffuseColor, 0.1 ,0.1, 0, 1);
   }
   update_uniform(modelview, projection, 2);
 
@@ -568,8 +583,9 @@ function streetLight(){
   
   if(!day){
     //set light pos for night time
-    lightPositions[1] = lampLight;
-    gl.uniform4f(u_lightPosition, lightPositions[1][0],lightPositions[1][1],lightPositions[1][2]+2, 1);
+    //lightPositions[1] = lampLight;
+    //gl.uniform4f(u_lightPosition, lightPositions[1][0],lightPositions[1][1],lightPositions[1][2]+2, 1);
+    gl.uniform4f(u_lightPosition, lampLight[0], lampLight[1], lampLight[2]+2,1);
     gl.uniform4f(u_diffuseColor, 1, 1, 0, 1);
   }
   else{
